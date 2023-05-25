@@ -46,7 +46,6 @@ const App = () => {
     setNewNumber(event.target.value);
   }
 
-  
   const handleSearch = (event) => {
     if (event.target.value !== '') {
       setPersonsToShow(persons.filter(person =>
