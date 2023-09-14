@@ -7,7 +7,7 @@ import Country from './components/Country';
 function App() {
   const [countries, setCountries] = useState([]);
   const [countriesToShow, setCountriesToShow] = useState([]);
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState(null);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -32,10 +32,6 @@ function App() {
   }
 
   const handleShow = (event) => {
-    countryService
-      .getWeather(event.target.id)
-      .then(weather => console.log(weather))
-
     setCountriesToShow(countries.filter(country =>
       country.name.common.toLowerCase() === event.target.id.toLowerCase()
     ));

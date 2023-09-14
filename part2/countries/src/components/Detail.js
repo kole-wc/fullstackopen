@@ -1,4 +1,6 @@
-const Detail = ({ countries } ) => {
+const Detail = ({ countries }) => {
+    
+
     return (
         <>
             {countries.map(country => 
@@ -13,6 +15,8 @@ const Detail = ({ countries } ) => {
                         )}
                     </ul>
                     <img src={country.flags.png} alt="flags"></img>
+                    <h2>Weather in {country.name.common}</h2>
+                    <p>temperature </p>
                 </div>
             )}
         </>  

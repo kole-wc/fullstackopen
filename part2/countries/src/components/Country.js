@@ -11,7 +11,7 @@ const Country = ({ countries, search, handleShow }) => {
         }
     } else if (countries.length === 1) {
         return (
-            <Detail countries={countries} />
+            <Detail countries={countries}/>
         );
     } else {
         return (
