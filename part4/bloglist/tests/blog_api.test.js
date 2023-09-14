@@ -13,8 +13,6 @@ beforeEach(async () => {
   await Blog.deleteMany({});
   await User.deleteMany({});
 
-  await User.deleteMany({});
-
   const passwordHash = await bcrypt.hash('secret', 10);
   const user = new User({ username: 'root', name: 'superuser',  passwordHash });
 
