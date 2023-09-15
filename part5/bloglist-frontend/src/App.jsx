@@ -15,7 +15,8 @@ const App = () => {
     author: '',
     url: ''
   })
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [message, setMessage] = useState(null)
+  const [status, setStatus] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -47,6 +48,12 @@ const App = () => {
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
+        setMessage(`${returnedBlog.title} by ${returnedBlog.author} added`)
+        setStatus('added')
+        setTimeout(() => {
+          setMessage(null)
+          setStatus('')
+        }, 5000)
         setNewBlog({
           title: '',
           author: '',
@@ -80,9 +87,11 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setMessage('wrong username or password')
+      setStatus('error')
       setTimeout(() => {
-        setErrorMessage(null)
+        setMessage(null)
+        setStatus('')
       }, 5000)
     }
   }
@@ -96,7 +105,10 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notification message={errorMessage} />
+      <Notification 
+        message={message} 
+        status={status}
+      />
       {!user && <LoginForm 
         handleLogin={handleLogin}
         username={username}
