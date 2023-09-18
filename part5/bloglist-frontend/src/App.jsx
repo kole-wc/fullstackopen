@@ -13,8 +13,6 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [message, setMessage] = useState(null)
   const [status, setStatus] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   const blogFormRef = useRef()
@@ -22,11 +20,11 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -87,32 +85,28 @@ const App = () => {
     }
   }
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-
+  const handleLogin = async (username, password) => {
     try {
       const user = await loginService.login({
-        username, password
+        username,
+        password,
       })
+
       window.localStorage.setItem(
-        'loggedNoteappUser', JSON.stringify(user)
+        'loggedBlogappUser', JSON.stringify(user)
       )
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
-      setMessage('wrong username or password')
-      setStatus('error')
+      setMessage('Wrong credentials')
       setTimeout(() => {
         setMessage(null)
-        setStatus('')
       }, 5000)
     }
   }
-  
+
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedNoteappUser')
+    window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
     blogService.setToken(null)
   }
@@ -120,22 +114,16 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notification 
-        message={message} 
+      <Notification
+        message={message}
         status={status}
       />
-      {!user && <LoginForm 
-        handleLogin={handleLogin}
-        username={username}
-        password={password}
-        setUsername={({ target }) => setUsername(target.value)}
-        setPassword={({ target }) => setPassword(target.value)}
-      />}
+      {!user && <LoginForm login={handleLogin} />}
       {user && <div>
         <p>{user.name} logged in</p>
         <button onClick={() => handleLogout()}>logout</button>
         <h2>create new</h2>
-        <Togglable 
+        <Togglable
           buttonLabel="new blog"
           ref={blogFormRef}
         >
@@ -143,10 +131,10 @@ const App = () => {
             createBlog={addBlog}
           />
         </Togglable>
-        </div>
+      </div>
       }
       {blogs.sort((a, b) => (a.likes < b.likes) ? 1 : -1).map(blog =>
-        <Blog 
+        <Blog
           key={blog.id}
           blog={blog}
           addLike={() => addLike(blog.id)}

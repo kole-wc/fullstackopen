@@ -17,12 +17,12 @@ const Blog = ({ blog, addLike, deleteBlog, user }) => {
         <br/>
         {blog.user.name}
         <br/>
-        {username === blog.user.username 
+        {username === blog.user.username
           ? <button onClick={deleteBlog}>remove</button>
-          : '' 
+          : ''
         }
       </div>
-    </div>  
+    </div>
   )
 }
 
