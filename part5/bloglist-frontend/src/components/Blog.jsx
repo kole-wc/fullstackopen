@@ -9,7 +9,7 @@ const Blog = ({ blog, addLike, deleteBlog, user }) => {
     <div className='blog'>
       {blog.title} {blog.author}
       <button onClick={() => {setShow(!show)}}>{show ? 'hide' : 'show'}</button>
-      <div style={visibility}>
+      <div style={visibility} className='togglableSection'>
         {blog.url}
         <br/>
         likes {blog.likes}
