@@ -55,7 +55,7 @@ const App = () => {
     blogService
       .update(id, changedBlog)
       .then(returnedBlog => {
-        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : { ...returnedBlog, user: blog.user }))
       })
       .catch(error => {
         setMessage(
@@ -121,7 +121,7 @@ const App = () => {
       {!user && <LoginForm login={handleLogin} />}
       {user && <div>
         <p>{user.name} logged in</p>
-        <button onClick={() => handleLogout()}>logout</button>
+        <button id='logout-button' onClick={() => handleLogout()}>logout</button>
         <h2>create new</h2>
         <Togglable
           buttonLabel="new blog"

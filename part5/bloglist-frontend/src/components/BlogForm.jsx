@@ -46,6 +46,7 @@ const BlogForm = ({ createBlog }) => {
       />
       <br/>
       author:
+      for
       <input
         id="author"
         value={newBlog.author}
